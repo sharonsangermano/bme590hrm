@@ -1,15 +1,11 @@
 import pandas as pd
 import numpy as np
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-from scipy import signal
 import math
-
 
 
 class ProcessData:
 
-    def __init__(self, data_table_arg):
+    def __init__(self, d_table_arg, t_table_arg, v_table_arg):
         """
             Args:
                 filename_arg (string): name of ECG file to open
@@ -26,16 +22,15 @@ class ProcessData:
 
             Returns:
         """
-        self.data_table = data_table_arg
-        self.time = data_table_arg['Time']
-        self.voltage = self.data_table['Voltage']
+        self.data_table = d_table_arg
+        self.time = t_table_arg
+        self.voltage = v_table_arg
         self.corr = []
         self.corr_peaks = []
         self.num_beats = 0
         self.beats = []
-
-    def get_data(self):
-        return self.data_table
+        self.volts = []
+        self.peaks = []
 
     def get_time(self):
         """
@@ -59,17 +54,6 @@ class ProcessData:
 
     def get_duration(self):
         return max(self.time) - min(self.time)
-    # def get_correlation(self):
-    #     normalized = (self.voltage-np.min(self.voltage))/(np.max(self.voltage)-np.min(self.voltage))
-    #     voltage_cen = normalized[0:300]
-    #     self.corr = np.correlate(normalized, voltage_cen, 'full')
-    #     print(len(self.corr))
-    #     print(len(self.voltage))
-    #     return self.corr
-    #
-    # def get_peaks(self):
-    #     self.corr_peaks = signal.find_peaks_cwt(np.asarray(self.corr), np.arange(1,300))
-    #     return self.corr_peaks
 
     def get_peaks(self):
         voltage_series =  pd.Series(data = self.voltage)
@@ -98,7 +82,8 @@ class ProcessData:
                 peaks.append(beat_location)
                 window = []
                 location += 1
-        return peaks
+        self.peaks = peaks
+        return self.peaks
 
     def get_num_beats(self):
         self.num_beats = len(self.peaks)
@@ -110,15 +95,8 @@ class ProcessData:
                 self.beats.append(self.time[i])
         return self.beats
 
-#def main():
-#    data_in = pd.read_csv("test_data/test_data1.csv", names=['Time', 'Voltage'])
-#    time = data_in['Time']
-#    voltage = data_in['Voltage']
-#    print(data_in)
-#    print(time)
-#    print(voltage)
-#    min_voltage = min(voltage)
-#    print(min_voltage)
-#
-#if __name__ == "__main__":
-#    main()
+    def get_peak_voltage(self):
+        for i in self.peaks:
+            if i <= len(self.voltage):
+                self.volts.append(self.voltage[i])
+        return self.volts
