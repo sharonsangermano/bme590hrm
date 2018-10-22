@@ -1,5 +1,5 @@
 from readdata import ReadData
-from processdata import ProcessData
+#from processdata import ProcessData
 
 
 def main():
@@ -14,7 +14,7 @@ def main():
     print(current_data.get_min())
     print(current_data.get_max())
     print(current_data.get_duration())
-    print(current_data.get_correlation())
+    #print(current_data.get_correlation())
     print(current_data.get_peaks())
     print(current_data.get_num_beats())
     print(current_data.get_beats_time())
