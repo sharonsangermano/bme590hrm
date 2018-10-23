@@ -1,5 +1,5 @@
 import numpy as np
-
+import sys
 
 class ReadData:
 
@@ -25,6 +25,15 @@ class ReadData:
         self.time = []
         self.voltage = []
 
+    def can_float(self, value):
+        try:
+            float(value)
+            return True
+
+        except ValueError:
+            print('None float value found in dataset.  Skipping this time, voltage pair')
+            return False
+
     def get_data(self):
         """
             Args:
@@ -32,21 +41,22 @@ class ReadData:
             Returns:
                 data_table (list???):
         """
-        self.data_table = np.loadtxt(self.filename, delimiter=",")
-        return self.data_table
+        try:
+            self.data_table = np.loadtxt(self.filename, delimiter=",")
 
-    def get_time(self):
-        """
-            Returns:
-                time (list): list of time intervals from input file
-        """
-        self.time = self.data_table[:, 0]
-        return self.time
+        except IOError:
+            print("That file could not be found.  Please try again")
+            sys.exit()
 
-    def get_voltage(self):
-        """
-            Returns:
-                voltage (list): list of voltages recorded in input file
-        """
-        self.voltage = self.data_table[:, 1]
-        return self.voltage
+        for index in self.data_table:
+            if self.can_float(index[0]) and self.can_float(index[1]):
+                self.time.append(index[0])
+                self.voltage.append(index[1])
+        return self.time, self.voltage
+
+        # index = 0
+        # if index < len(self.input_data)
+        #     if self.can_float(self.input_data[index, 0]) and self.can_float(self.input_data[index, 1])
+        #         self.data_table.append([self.input_data[index, 0], self.input_data[index, 1]])
+        #     index += 1
+        # return self.data_table

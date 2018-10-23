@@ -4,22 +4,20 @@ from processdata import ProcessData
 
 def main():
     current_data = ReadData('test_data/test_data1.csv')
-    full_data = current_data.get_data()
-    time_data = current_data.get_time()
-    voltage_data = current_data.get_voltage()
-    ecg_series = ProcessData(full_data, time_data, voltage_data)
-    print(full_data)
-    print(time_data)
+    time, voltage = current_data.get_data()
+    ecg_series = ProcessData(time, voltage)
+    print(time)
+    print(voltage)
     print(ecg_series.get_time())
     print(ecg_series.get_voltage())
-    print(voltage_data)
-    print(ecg_series.get_min())
-    print(ecg_series.get_max())
-    print(ecg_series.get_duration())
+    print('The minimum voltage is', ecg_series.get_min(), 'V')
+    print('The maximum voltage is', ecg_series.get_max(), 'V')
+    print('The duration is', ecg_series.get_duration(), 's')
     print(ecg_series.get_peaks())
     print(ecg_series.get_num_beats())
     print(ecg_series.get_beats_time())
     print(ecg_series.get_peak_voltage())
+    print('The mean heart rate is %.3f bpm' % ecg_series.get_mean_hr())
 
 
 if __name__ == "__main__":
