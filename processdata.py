@@ -5,7 +5,7 @@ import math
 
 class ProcessData:
 
-    def __init__(self, d_table_arg, t_table_arg, v_table_arg):
+    def __init__(self, time_arg, voltage_arg):
         """
             Args:
                 filename_arg (string): name of ECG file to open
@@ -22,15 +22,16 @@ class ProcessData:
 
             Returns:
         """
-        self.data_table = d_table_arg
-        self.time = t_table_arg
-        self.voltage = v_table_arg
+        self.time = time_arg
+        self.voltage = voltage_arg
         self.corr = []
         self.corr_peaks = []
         self.num_beats = 0
         self.beats = []
         self.volts = []
         self.peaks = []
+        self.mean_hr = 0
+        self.duration = 0
 
     def get_time(self):
         """
@@ -53,12 +54,13 @@ class ProcessData:
         return max(self.voltage)
 
     def get_duration(self):
-        return max(self.time) - min(self.time)
+        self.duration = max(self.time) - min(self.time)
+        return self.duration
 
     def get_peaks(self):
-        voltage_series =  pd.Series(data = self.voltage)
+        voltage_series = pd.Series(data=self.voltage)
         freq = 1/(self.time[1] - self.time[0])
-        win_percent = 0.6
+        win_percent = 0.5
         moving_average = voltage_series.rolling(int(win_percent*freq)).mean()
         avg_voltage = (np.mean(voltage_series))
         moving_average = [avg_voltage if math.isnan(x) else x for x in moving_average]
@@ -100,3 +102,7 @@ class ProcessData:
             if i <= len(self.voltage):
                 self.volts.append(self.voltage[i])
         return self.volts
+
+    def get_mean_hr(self):
+        self.mean_hr = self.num_beats/self.duration*60
+        return self.mean_hr
