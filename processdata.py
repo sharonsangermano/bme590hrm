@@ -6,68 +6,85 @@ import readdata
 
 class ProcessData:
 
-    #def __init__(self, time_arg, voltage_arg):
     def __init__(self, file_arg):
-        """
-            Args:
-                filename_arg (string): name of ECG file to open
+        """Initialized an object of teh ProcessData class for the data file of interest.
 
-            Attributes:
-                self.filename (string): name of ECG file to open
-                self.data_table (tuple??list??): stores time and voltage data from file
-                self.time (list): stores time data from file
-                self.voltage (list): stores voltage data from file
-                self.corr (list): stores correlated voltage data
-                self.corr_peaks (list): stores list index of where peaks occur
-                self.num_beats (int): the number of beats found in the ECG file
-                self.beats (list): time of each beat
+        Args:
+            file_arg: name of test data file to be analyzed
 
-            Returns:
+        Attributes:
+            self.time: list of all time values obtained from the data file
+            self.voltage: list of all voltage values obtained from the data file
+            self.num_beats: the number of heart beats detected
+            self.peaks: list of indices from the time and voltage array which indicate a peak in the voltage reading
+            self.beats: list of times where peaks/beats occur
+            self.volts: list of voltages at peak/beat
+            self.duration: duration found for time/voltage data used to calculate mean heart rate
+            self.mean_hr: mean heart rate calculated for the data set
         """
         self.time, self.voltage = readdata.get_data('test_data/test_data1.csv')
-        #self.time = time_arg
-        #self.voltage = voltage_arg
-        self.corr = []
-        self.corr_peaks = []
         self.num_beats = 0
+        self.peaks = []
         self.beats = []
         self.volts = []
-        self.peaks = []
-        self.mean_hr = 0
         self.duration = 0
+        self.mean_hr = 0
         logging.basicConfig(filename="hrm_log.txt", format='%(asctime)s %(message)s',
                             datefmt='%m/%d/%Y %I:%M:%S %p')
 
     def get_time(self):
         """
-            Returns:
-                time (list): list of time intervals from input file
+
+        Returns:
+            time: list of all time values obtained from the data file
+
         """
         return self.time
 
     def get_voltage(self):
         """
-            Returns:
-                voltage (list): list of voltages recorded in input file
+
+        Returns:
+            voltage: list of all voltage values obtained from the data file
+
         """
         return self.voltage
 
     def get_min(self):
+        """
+
+        Returns:
+            the minimum voltage from the data set
+
+        """
         return min(self.voltage)
 
     def get_max(self):
+        """
+
+        Returns:
+            the maximum voltage from the data set
+
+        """
         return max(self.voltage)
 
     def get_peaks(self):
         """
-        Modified from:
-            van Gent, P. (2016). Analyzing a Discrete Heart Rate Signal Using Python. A tech blog about fun
-            things with Python and embedded electronics. Retrieved from:
-            http://www.paulvangent.com/2016/03/15/analyzing-a-discrete-heart-rate-signal-using-python-part-1/
 
-        Author states that code may be modified and redistributed as long as the modified
+        Attributes:
+            voltage_series:
+
+        Returns:
+            peaks: list of indices from the time and voltage array which indicate a peak in the voltage reading
+
+        References:
+            Modified from:
+                van Gent, P. (2016). Analyzing a Discrete Heart Rate Signal Using Python. A tech blog about fun
+                things with Python and embedded electronics. Retrieved from:
+                http://www.paulvangent.com/2016/03/15/analyzing-a-discrete-heart-rate-signal-using-python-part-1/
+
+            Author states that code may be modified and redistributed as long as the modified
             code is shared with the same right and the original author is cited using the format above.
-        :return:
         """
         voltage_series = pd.Series(data=self.voltage)
         freq = 1/(self.time[1] - self.time[0])
