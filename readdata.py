@@ -34,20 +34,17 @@ def get_data(filename_arg):
             voltage: list containing the voltage values of the data set
 
         """
-#        data_table = []
         time = []
         voltage = []
         try:
-            #data_table = np.loadtxt(filename_arg, delimiter=",")
-            #data_table = csv.reader(filename_arg, delimiter=',')
             open(filename_arg, 'r')
 
         except IOError:
             print("That file could not be found.  Please try again")
             sys.exit()
 
-        data_table = np.loadtxt(filename_arg, delimiter=',')
-        #data_table = csv.reader(filename_arg, delimiter=',')
+        data_file = open(filename_arg, 'r')
+        data_table = csv.reader(data_file, delimiter=',')
 
         for index in data_table:
             if can_float(index[0]) and can_float(index[1]):

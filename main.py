@@ -1,4 +1,3 @@
-import readdata
 from processdata import ProcessData
 
 

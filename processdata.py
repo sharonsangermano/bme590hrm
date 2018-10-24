@@ -22,7 +22,7 @@ class ProcessData:
             self.duration: duration found for time/voltage data used to calculate mean heart rate
             self.mean_hr: mean heart rate calculated for the data set
         """
-        self.time, self.voltage = readdata.get_data('test_data/test_data1.csv')
+        self.time, self.voltage = readdata.get_data(file_arg)
         self.num_beats = 0
         self.peaks = []
         self.beats = []
