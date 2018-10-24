@@ -18,5 +18,5 @@ def test_get_data():
     d, c = get_data('test_get.csv')
     print(d)
     print(c)
-    assert d == [0.3, 0.12, 0.3]
+    assert d == [0.04, 0.12, 0.3]
     assert c == [0.2, 0.3, 0.4]

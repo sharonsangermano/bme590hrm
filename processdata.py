@@ -2,10 +2,12 @@ import pandas as pd
 import numpy as np
 import math
 import logging
+import readdata
 
 class ProcessData:
 
-    def __init__(self, time_arg, voltage_arg):
+    #def __init__(self, time_arg, voltage_arg):
+    def __init__(self, file_arg):
         """
             Args:
                 filename_arg (string): name of ECG file to open
@@ -22,8 +24,9 @@ class ProcessData:
 
             Returns:
         """
-        self.time = time_arg
-        self.voltage = voltage_arg
+        self.time, self.voltage = readdata.get_data('test_data/test_data1.csv')
+        #self.time = time_arg
+        #self.voltage = voltage_arg
         self.corr = []
         self.corr_peaks = []
         self.num_beats = 0

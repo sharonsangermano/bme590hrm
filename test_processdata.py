@@ -1,12 +1,10 @@
 from processdata import ProcessData
-import readdata
 import pytest
 
 
 @pytest.fixture
 def test_load():
-    time, voltage = readdata.get_data('test_data/test_data1.csv')
-    return ProcessData(time, voltage)
+    return ProcessData('test_data/test_data1.csv')
 
 
 def test_get_time(test_load):
