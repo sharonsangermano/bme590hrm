@@ -4,11 +4,7 @@ from processdata import ProcessData
 
 def main():
     num = input('Enter test data file number')
-    time, voltage = readdata.get_data('test_data/test_data' + num + '.csv')
-    #time, voltage = readdata.get_data('test_data/test_data1.csv')
-    ecg_series = ProcessData(time, voltage)
-    print(time)
-    print(voltage)
+    ecg_series = ProcessData('test_data/test_data' + num + '.csv')
     print(ecg_series.get_time())
     print(ecg_series.get_voltage())
     print('The minimum voltage is', ecg_series.get_min(), 'V')
