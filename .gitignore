@@ -1,13 +1,4 @@
-*.aux
-*.log
-*.out
-*.7z
-.idea
-.cache
-*.synctex.*
-.ipynb_checkpoint
-.DS_Store
-*.fls
-.fdb_latexmk
-env/
-.venv/
+__pycache__/
+*.pyc
+.idea/
+.venv/.env/env/venv
