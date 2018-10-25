@@ -2,6 +2,7 @@ import numpy as np
 import sys
 import csv
 import logging
+import math
 
 
 def can_float(value):
@@ -40,6 +41,7 @@ def get_data(filename_arg):
         voltage = []
         try:
             open(filename_arg, 'r')
+            logging.info('Successfully opened file: %s ' % filename_arg)
 
         except IOError:
             logging.error('Error: File could not be found. Please try again')
@@ -53,11 +55,11 @@ def get_data(filename_arg):
             # if index[0] is None or index[1] is None:
             #    data_table.pop(index)
             #    print("Missing datapoint, skipping this time, voltage pair")
-            if index[0] is 'NaN':
-                index[0] = '-'
-            if index[1] is 'NaN':
-                index[1] = '-'
             if can_float(index[0]) and can_float(index[1]):
-                time.append(float(index[0]))
-                voltage.append(float(index[1]))
+                if math.isnan(float(index[0])) or math.isnan(float(index[1])):
+                    logging.warning('Warning: Null value found in dataset.  '
+                                    'Skipping this time, voltage pair')
+                else:
+                    time.append(float(index[0]))
+                    voltage.append(float(index[1]))
         return time, voltage

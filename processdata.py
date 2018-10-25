@@ -36,8 +36,7 @@ class ProcessData:
             pass
         self.file_name = file_arg
         self.time, self.voltage = readdata.get_data(self.file_name)
-        logging.info('Successfully opened file and imported data '
-                     'from: %s ' % self.file_name)
+        logging.info('Successfully imported data from: %s ' % self.file_name)
         self.num_beats = 0
         self.peaks = []
         self.beats = []
