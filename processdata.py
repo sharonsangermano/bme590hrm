@@ -89,7 +89,8 @@ class ProcessData:
                 self.voltage[y] = self.voltage[y] + 1.5
                 logging.warning('Warning: No positive voltages detected. '
                                 'all voltage values shifted up 0.5V. Minimum, '
-                                'Maximum, and peak voltage values are not accurate')
+                                'Maximum, and peak voltage values are not '
+                                'accurate')
             return self.voltage
 
     def get_time(self):
@@ -151,8 +152,8 @@ class ProcessData:
     #             heart-rate-signal-using-python-part-1/
     #
     #         Author states that code may be modified and redistributed as long
-    #         as the modified code is shared with the same right and the original
-    #         author is cited using the format above.
+    #         as the modified code is shared with the same right and the
+    #         original author is cited using the format above.
     #     """
     #     voltage_series = pd.Series(data=self.voltage)
     #     freq = 1/(self.time[1] - self.time[0])
@@ -161,8 +162,8 @@ class ProcessData:
     #     avg_voltage = (np.mean(voltage_series))
     #     moving_average = [avg_voltage if math.isnan(x) else x for x in
     #                       moving_average]
-    #     moving_average = [(x+abs(avg_voltage-abs(min(self.voltage)/2)))*1.2 for
-    #                       x in moving_average]
+    #     moving_average = [(x+abs(avg_voltage-abs(min(self.voltage)/2)))*1.2
+    #                       for x in moving_average]
     #     window = []
     #     peaks = []
     #     location = 0
@@ -216,8 +217,8 @@ class ProcessData:
         avg_voltage = (np.mean(voltage_series))
         moving_average = [avg_voltage if math.isnan(x) else x for x in
                           moving_average]
-        moving_average = [(x + abs(avg_voltage - abs(min(self.voltage) / 2))) * 1.2 for
-                          x in moving_average]
+        moving_average = [(x + abs(avg_voltage - abs(min(self.voltage) / 2))) *
+                          1.2 for x in moving_average]
         window = []
         peaks = []
         peak_len = 0
