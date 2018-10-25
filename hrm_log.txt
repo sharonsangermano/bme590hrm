@@ -1,0 +1,8 @@
+10/25/2018 01:52:47 PM Successfully opened file and imported data from: test_data/test_data20.csv 
+10/25/2018 01:52:47 PM Successfully identified minimum voltage.
+10/25/2018 01:52:47 PM Successfully identified maximum voltage.
+10/25/2018 01:52:49 PM Successfully identified ECG voltage peaks.
+10/25/2018 01:52:49 PM Successfully identified number of heart beats.
+10/25/2018 01:52:49 PM Warning: Less than 5 beats detected. Mean heart rate may be inaccurate.
+10/25/2018 01:52:49 PM Successfully identified times corresponding to beats.
+10/25/2018 01:52:49 PM Successfully identified voltages corresponding with beats.
