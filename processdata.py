@@ -3,6 +3,7 @@ import numpy as np
 import math
 import logging
 import readdata
+import sys
 
 class ProcessData:
 
@@ -22,7 +23,13 @@ class ProcessData:
             self.duration: duration found for time/voltage data used to calculate mean heart rate
             self.mean_hr: mean heart rate calculated for the data set
         """
-        self.time, self.voltage = readdata.get_data(file_arg)
+        logging.basicConfig(filename="hrm_log.txt", format='%(asctime)s %(message)s',
+                            datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
+        with open('hrm_log.txt', 'w'):
+            pass
+        self.file_name = file_arg
+        self.time, self.voltage = readdata.get_data(self.file_name)
+        logging.info('Successfully opened file and imported data from: %s ' % self.file_name)
         self.num_beats = 0
         self.peaks = []
         self.beats = []
@@ -31,8 +38,24 @@ class ProcessData:
         self.mean_hr = 0
         self.min_vol = 0
         self.max_vol = 0
-        logging.basicConfig(filename="hrm_log.txt", format='%(asctime)s %(message)s',
-                            datefmt='%m/%d/%Y %I:%M:%S %p')
+
+    def check_data(self):
+        try:
+            np.isreal(self.time)
+        except ValueError:
+            logging.error('ValueError detected in time list')
+            print('None real number found in time list. Please try again')
+            sys.exit()
+        try:
+            np.isreal(self.voltage)
+        except ValueError:
+            logging.error('ValueError detected in voltage list')
+            print('None real number found in voltage list. Please try again')
+            sys.exit()
+        if len(self.time) != len(self.voltage):
+            logging.error('Error: Time and voltage arrays must be of equal length')
+            print('Error: Time and voltage arrays must be of equal length')
+            sys.exit()
 
     def get_time(self):
         """
@@ -60,6 +83,7 @@ class ProcessData:
 
         """
         self.min_vol = min(self.voltage)
+        logging.info('Successfully identified minimum voltage.')
         return self.min_vol
 
     def get_max(self):
@@ -70,6 +94,7 @@ class ProcessData:
 
         """
         self.max_vol = max(self.voltage)
+        logging.info('Successfully identified maximum voltage.')
         return self.max_vol
 
     def get_peaks(self):
@@ -117,30 +142,42 @@ class ProcessData:
                 window = []
                 location += 1
         self.peaks = peaks
+        logging.info('Successfully identified ECG voltage peaks.')
         return self.peaks
 
     def get_num_beats(self):
         self.num_beats = len(self.peaks)
+        logging.info('Successfully identified number of heart beats.')
+        if self.num_beats < 5:
+            logging.warning('Warning: Less than 5 beats detected. Mean '
+                            'heart rate may be inaccurate.')
         return self.num_beats
 
     def get_beats_time(self):
         for i in self.peaks:
             if i <= len(self.time):
                 self.beats.append(self.time[i])
+        logging.info('Successfully identified times corresponding to beats.')
         return self.beats
 
     def get_peak_voltage(self):
         for i in self.peaks:
             if i <= len(self.voltage):
                 self.volts.append(self.voltage[i])
+        logging.info('Successfully identified voltages corresponding with beats.')
         return self.volts
 
     def get_duration(self):
         self.duration = max(self.beats) - min(self.beats)
+        logging.info('Successfully identified duration.')
+        if self.duration < 5:
+            logging.warning('Warning: Less than 5 seconds of ECG data being used. Mean '
+                            'heart rate may be inaccurate.')
         return self.duration
 
     def get_mean_hr(self):
         self.mean_hr = self.num_beats/self.duration*60
+        logging.info('Successfully identified mean heart rate.')
         if self.mean_hr < 40:
             logging.warning('Warning: Heart rate abnormally low. (<40 bmp)')
         if self.mean_hr > 180:
@@ -148,11 +185,11 @@ class ProcessData:
         return self.mean_hr
 
     def get_results(self):
-        results = {'Mean heart rate': round(self.mean_hr, 3),
-                   'Minimum voltage': self.min_vol,
-                   'Maximum voltage': self.max_vol,
-                   'Duration': self.duration,
-                   'Number of beats': self.num_beats,
-                   'Beat occurrence times': self.beats,
+        results = {'Mean heart rate': '%f bpm' % round(self.mean_hr, 3),
+                   'Minimum voltage': '%f V' % self.min_vol,
+                   'Maximum voltage': '%f V' % self.max_vol,
+                   'Duration': '%f s' % self.duration,
+                   'Number of beats': '%f beats' % self.num_beats,
+                   'Beat occurrence times (in seconds)': self.beats,
                    }
         return results

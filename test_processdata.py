@@ -83,11 +83,11 @@ def test_get_results(test_load):
     test_load.get_num_beats()
     test_load.get_mean_hr()
     return_dic = test_load.get_results()
-    dic_results = {'Mean heart rate': round(test_load.get_mean_hr(), 3),
-                   'Minimum voltage': test_load.get_min(),
-                   'Maximum voltage': test_load.get_max(),
-                   'Duration': test_load.get_duration(),
-                   'Number of beats': test_load.get_num_beats(),
-                   'Beat occurrence times': test_load.get_beats_time(),
+    dic_results = {'Mean heart rate': '%f bpm' % round(test_load.get_mean_hr(), 3),
+                   'Minimum voltage': '%f V' % test_load.get_min(),
+                   'Maximum voltage': '%f V' % test_load.get_max(),
+                   'Duration': '%f s' % test_load.get_duration(),
+                   'Number of beats': '%f beats' % test_load.get_num_beats(),
+                   'Beat occurrence times (in seconds)': test_load.get_beats_time(),
                    }
     assert dic_results == return_dic
