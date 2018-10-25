@@ -7,6 +7,8 @@ def main():
     filename = ('test_data/test_data' + num + '.csv')
     ecg_series = ProcessData(filename)
     ecg_series.check_data()
+    ecg_series.check_neg()
+    ecg_series.handle_neg()
     print(len(ecg_series.get_time()))
     print(len(ecg_series.get_voltage()))
     print('The minimum voltage is', ecg_series.get_min(), 'V')

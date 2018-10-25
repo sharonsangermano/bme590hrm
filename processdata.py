@@ -65,6 +65,34 @@ class ProcessData:
             print('Error: Time and voltage arrays must be of equal length')
             sys.exit()
 
+    # def check_neg(self):
+    #     total = 0
+    #     count = 0
+    #     for x in self.voltage:
+    #         if x > 0:
+    #             count += 1
+    #         total += 1
+    #         if count/total < 0.02:
+    #             return False
+    #         else:
+    #             return True
+    #
+    def check_neg(self):
+        for x in self.voltage:
+            if x > 0:
+                return True
+        return False
+
+    def handle_neg(self):
+        if self.check_neg() is False:
+            for y in range(0, len(self.voltage)):
+                self.voltage[y] = self.voltage[y] + 1.5
+                logging.warning('Warning: No positive voltages detected. '
+                                'all voltage values shifted up 0.5V. Minimum, '
+                                'Maximum, and peak voltage values are not '
+                                'accurate')
+            return self.voltage
+
     def get_time(self):
         """
 
@@ -105,6 +133,61 @@ class ProcessData:
         logging.info('Successfully identified maximum voltage.')
         return self.max_vol
 
+    # def get_peaks(self):
+    #     """
+    #
+    #     Attributes:
+    #         voltage_series:
+    #
+    #     Returns:
+    #         peaks: list of indices from the time and voltage array which
+    #                 indicate a peak in the voltage reading
+    #
+    #     References:
+    #         Modified from:
+    #             van Gent, P. (2016). Analyzing a Discrete Heart Rate Signal
+    #             Using Python. A tech blog about fun things with Python and
+    #             embedded electronics. Retrieved from:
+    #             http://www.paulvangent.com/2016/03/15/analyzing-a-discrete-
+    #             heart-rate-signal-using-python-part-1/
+    #
+    #         Author states that code may be modified and redistributed as long
+    #         as the modified code is shared with the same right and the
+    #         original author is cited using the format above.
+    #     """
+    #     voltage_series = pd.Series(data=self.voltage)
+    #     freq = 1/(self.time[1] - self.time[0])
+    #     win_percent = 0.5
+    #     moving_average = voltage_series.rolling(int(win_percent*freq)).mean()
+    #     avg_voltage = (np.mean(voltage_series))
+    #     moving_average = [avg_voltage if math.isnan(x) else x for x in
+    #                       moving_average]
+    #     moving_average = [(x+abs(avg_voltage-abs(min(self.voltage)/2)))*1.2
+    #                       for x in moving_average]
+    #     window = []
+    #     peaks = []
+    #     location = 0
+    #     for datapoint in voltage_series:
+    #         rolling_mean = moving_average[location]
+    #         if datapoint < rolling_mean and len(window) < 1:
+    #             location += 1
+    #         elif datapoint > rolling_mean:
+    #             window.append(datapoint)
+    #             location += 1
+    #             if datapoint >= len(voltage_series):
+    #                 beat_location = location - len(window) + \
+    #                                 (window.index(max(window)))
+    #                 peaks.append(beat_location)
+    #                 window = []
+    #         else:
+    #             beat_location = location - len(window) + \
+    #                             (window.index(max(window)))
+    #             peaks.append(beat_location)
+    #             window = []
+    #             location += 1
+    #     self.peaks = peaks
+    #     logging.info('Successfully identified ECG voltage peaks.')
+    #     return self.peaks
     def get_peaks(self):
         """
 
@@ -128,35 +211,43 @@ class ProcessData:
             author is cited using the format above.
         """
         voltage_series = pd.Series(data=self.voltage)
-        freq = 1/(self.time[1] - self.time[0])
+        freq = 1 / (self.time[1] - self.time[0])
         win_percent = 0.5
-        moving_average = voltage_series.rolling(int(win_percent*freq)).mean()
+        moving_average = voltage_series.rolling(int(win_percent * freq)).mean()
         avg_voltage = (np.mean(voltage_series))
         moving_average = [avg_voltage if math.isnan(x) else x for x in
                           moving_average]
-        moving_average = [(x+abs(avg_voltage-abs(min(self.voltage)/2)))*1.2 for
-                          x in moving_average]
+        moving_average = [(x + abs(avg_voltage - abs(min(self.voltage) / 2))) *
+                          1.2 for x in moving_average]
         window = []
         peaks = []
-        location = 0
-        for datapoint in voltage_series:
-            rolling_mean = moving_average[location]
-            if datapoint < rolling_mean and len(window) < 1:
-                location += 1
-            elif datapoint > rolling_mean:
-                window.append(datapoint)
-                location += 1
-                if datapoint >= len(voltage_series):
+        peak_len = 0
+        while peak_len is 0:
+            location = 0
+            for datapoint in voltage_series:
+                rolling_mean = moving_average[location]
+                if datapoint < rolling_mean and len(window) < 1:
+                    location += 1
+                elif datapoint > rolling_mean:
+                    window.append(datapoint)
+                    location += 1
+                    if datapoint >= len(voltage_series):
+                        beat_location = location - len(window) + \
+                                        (window.index(max(window)))
+                        peaks.append(beat_location)
+                        window = []
+                else:
                     beat_location = location - len(window) + \
                                     (window.index(max(window)))
                     peaks.append(beat_location)
                     window = []
-            else:
-                beat_location = location - len(window) + \
-                                (window.index(max(window)))
-                peaks.append(beat_location)
-                window = []
-                location += 1
+                    location += 1
+                peak_len = len(peaks)
+            for x in range(0, len(voltage_series)):
+                voltage_series[x] = voltage_series[x] * -1
+            if peak_len == 0:
+                logging.warning('Warning: Inverted ECG signal detected '
+                                'peaks detected using inversion of input')
         self.peaks = peaks
         logging.info('Successfully identified ECG voltage peaks.')
         return self.peaks
