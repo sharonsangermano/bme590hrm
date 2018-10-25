@@ -19,7 +19,8 @@ def can_float(value):
         float(value)
         return True
     except ValueError:
-        logging.warning('Warning: Non-float value found in dataset.  Skipping this time, voltage pair')
+        logging.warning('Warning: Non-float value found in dataset.  Skipping '
+                        'this time, voltage pair')
         return False
 
 
@@ -47,9 +48,9 @@ def get_data(filename_arg):
         data_file = open(filename_arg, 'r')
 
         data_table = csv.reader(data_file, delimiter=',')
-        #data_table = csv.reader(data_file)
+        # data_table = csv.reader(data_file)
         for index in data_table:
-            #if index[0] is None or index[1] is None:
+            # if index[0] is None or index[1] is None:
             #    data_table.pop(index)
             #    print("Missing datapoint, skipping this time, voltage pair")
             if index[0] is 'NaN':

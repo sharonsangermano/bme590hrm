@@ -1,0 +1,13 @@
+name: hrm-test-environment
+dependencies:
+        - numpy
+        - scipy
+        - pandas
+        - ipython
+        - jupyter
+        - sphinx
+          #        - pudb
+        - pytest
+        - pytest-pep8
+        - pytest-cov
+          #        - pytest-pudb

@@ -5,31 +5,39 @@ import logging
 import readdata
 import sys
 
+
 class ProcessData:
 
     def __init__(self, file_arg):
-        """Initialized an object of teh ProcessData class for the data file of interest.
+        """Initialized an object of teh ProcessData class for the data
+        file of interest.
 
         Args:
             file_arg: name of test data file to be analyzed
 
         Attributes:
-            self.time: list of all time values obtained from the data file
-            self.voltage: list of all voltage values obtained from the data file
+            self.time: list of all time values obtained from the
+                        data file
+            self.voltage: list of all voltage values obtained from the
+                        data file
             self.num_beats: the number of heart beats detected
-            self.peaks: list of indices from the time and voltage array which indicate a peak in the voltage reading
+            self.peaks: list of indices from the time and voltage array
+                        which indicate a peak in the voltage reading
             self.beats: list of times where peaks/beats occur
             self.volts: list of voltages at peak/beat
-            self.duration: duration found for time/voltage data used to calculate mean heart rate
+            self.duration: duration found for time/voltage data
+                        used to calculate mean heart rate
             self.mean_hr: mean heart rate calculated for the data set
         """
-        logging.basicConfig(filename="hrm_log.txt", format='%(asctime)s %(message)s',
+        logging.basicConfig(filename="hrm_log.txt", format='%(asctime)s '
+                                                           '%(message)s',
                             datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
         with open('hrm_log.txt', 'w'):
             pass
         self.file_name = file_arg
         self.time, self.voltage = readdata.get_data(self.file_name)
-        logging.info('Successfully opened file and imported data from: %s ' % self.file_name)
+        logging.info('Successfully opened file and imported data '
+                     'from: %s ' % self.file_name)
         self.num_beats = 0
         self.peaks = []
         self.beats = []
@@ -53,7 +61,8 @@ class ProcessData:
             print('None real number found in voltage list. Please try again')
             sys.exit()
         if len(self.time) != len(self.voltage):
-            logging.error('Error: Time and voltage arrays must be of equal length')
+            logging.error('Error: Time and voltage arrays must be of '
+                          'equal length')
             print('Error: Time and voltage arrays must be of equal length')
             sys.exit()
 
@@ -104,24 +113,30 @@ class ProcessData:
             voltage_series:
 
         Returns:
-            peaks: list of indices from the time and voltage array which indicate a peak in the voltage reading
+            peaks: list of indices from the time and voltage array which
+                    indicate a peak in the voltage reading
 
         References:
             Modified from:
-                van Gent, P. (2016). Analyzing a Discrete Heart Rate Signal Using Python. A tech blog about fun
-                things with Python and embedded electronics. Retrieved from:
-                http://www.paulvangent.com/2016/03/15/analyzing-a-discrete-heart-rate-signal-using-python-part-1/
+                van Gent, P. (2016). Analyzing a Discrete Heart Rate Signal
+                Using Python. A tech blog about fun things with Python and
+                embedded electronics. Retrieved from:
+                http://www.paulvangent.com/2016/03/15/analyzing-a-discrete-
+                heart-rate-signal-using-python-part-1/
 
-            Author states that code may be modified and redistributed as long as the modified
-            code is shared with the same right and the original author is cited using the format above.
+            Author states that code may be modified and redistributed as long
+            as the modified code is shared with the same right and the original
+            author is cited using the format above.
         """
         voltage_series = pd.Series(data=self.voltage)
         freq = 1/(self.time[1] - self.time[0])
         win_percent = 0.5
         moving_average = voltage_series.rolling(int(win_percent*freq)).mean()
         avg_voltage = (np.mean(voltage_series))
-        moving_average = [avg_voltage if math.isnan(x) else x for x in moving_average]
-        moving_average = [(x+abs(avg_voltage-abs(min(self.voltage)/2)))*1.2 for x in moving_average]
+        moving_average = [avg_voltage if math.isnan(x) else x for x in
+                          moving_average]
+        moving_average = [(x+abs(avg_voltage-abs(min(self.voltage)/2)))*1.2 for
+                          x in moving_average]
         window = []
         peaks = []
         location = 0
@@ -133,11 +148,13 @@ class ProcessData:
                 window.append(datapoint)
                 location += 1
                 if datapoint >= len(voltage_series):
-                    beat_location = location - len(window) + (window.index(max(window)))
+                    beat_location = location - len(window) + \
+                                    (window.index(max(window)))
                     peaks.append(beat_location)
                     window = []
             else:
-                beat_location = location - len(window) + (window.index(max(window)))
+                beat_location = location - len(window) + \
+                                (window.index(max(window)))
                 peaks.append(beat_location)
                 window = []
                 location += 1
@@ -164,15 +181,16 @@ class ProcessData:
         for i in self.peaks:
             if i <= len(self.voltage):
                 self.volts.append(self.voltage[i])
-        logging.info('Successfully identified voltages corresponding with beats.')
+        logging.info('Successfully identified voltages corresponding with '
+                     'beats.')
         return self.volts
 
     def get_duration(self):
         self.duration = max(self.beats) - min(self.beats)
         logging.info('Successfully identified duration.')
         if self.duration < 5:
-            logging.warning('Warning: Less than 5 seconds of ECG data being used. Mean '
-                            'heart rate may be inaccurate.')
+            logging.warning('Warning: Less than 5 seconds of ECG data being '
+                            'used. Mean heart rate may be inaccurate.')
         return self.duration
 
     def get_mean_hr(self):
