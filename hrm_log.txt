@@ -1,1 +1,10 @@
-10/23/2018 10:16:40 PM Warning: Heart rate abnormally low. (<40 bmp)
+10/25/2018 12:10:03 AM Successfully opened file and imported data from: test_data/test_data1.csv 
+10/25/2018 12:10:03 AM Successfully identified minimum voltage.
+10/25/2018 12:10:03 AM Successfully identified maximum voltage.
+10/25/2018 12:10:05 AM Successfully identified ECG voltage peaks.
+10/25/2018 12:10:05 AM Successfully identified number of heart beats.
+10/25/2018 12:10:05 AM Successfully identified times corresponding to beats.
+10/25/2018 12:10:05 AM Successfully identified voltages corresponding with beats.
+10/25/2018 12:10:05 AM Successfully identified duration.
+10/25/2018 12:10:05 AM Successfully identified mean heart rate.
+10/25/2018 12:10:05 AM Processing complete for file: test_data/test_data1.csv. JSON file has been createdcontaining values of interest.
