@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>processdata module &#8212; AWESOME_SAUCE v1.0.0 documentation</title>
+    <title>processdata module &#8212; bme590hrm v1.0.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="_static/documentation_options.js"></script>
@@ -36,24 +36,39 @@
 <em class="property">class </em><code class="descclassname">processdata.</code><code class="descname">ProcessData</code><span class="sig-paren">(</span><em>file_arg</em><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
-<dt id="processdata.ProcessData.check_data">
-<code class="descname">check_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.check_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
 <dt id="processdata.ProcessData.check_neg">
 <code class="descname">check_neg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.check_neg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Checks voltage list to determine if all values are negative</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>boolean: True if the list contains one or more positive</dt>
+<dd>voltage values.  False if the list contains only
+negative voltage values</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="processdata.ProcessData.get_beats_time">
 <code class="descname">get_beats_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_beats_time" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="docutils">
+<dt>Returns:</dt>
+<dd>beats: list of times corresponding to peaks detected</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="processdata.ProcessData.get_duration">
 <code class="descname">get_duration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_duration" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Duration is considered the time from the first detected peak
+to the last detected peak.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>duration: the time in which the detected beats occurred</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="processdata.ProcessData.get_max">
@@ -67,7 +82,13 @@
 <dl class="method">
 <dt id="processdata.ProcessData.get_mean_hr">
 <code class="descname">get_mean_hr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_mean_hr" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Mean heart rate is calculated as the number of beats detected
+divided by the duration.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>mean_hr: the calculated mean heart rate</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="processdata.ProcessData.get_min">
@@ -81,19 +102,40 @@
 <dl class="method">
 <dt id="processdata.ProcessData.get_num_beats">
 <code class="descname">get_num_beats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_num_beats" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Beats are considered to be one peak to the next so the
+total number of beats is one fewer than the total number of
+peaks detected.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>num_beats: number of heart beats detected</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="processdata.ProcessData.get_peak_voltage">
 <code class="descname">get_peak_voltage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_peak_voltage" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="docutils">
+<dt>Returns:</dt>
+<dd>volts: list of voltages corresponding to peaks detected</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="processdata.ProcessData.get_peaks">
 <code class="descname">get_peaks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_peaks" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
+<dd><p>Using moving average algorithm to detect voltage peaks and
+captures the time[] and voltage[] indices corresponding to
+each peak.</p>
+<dl class="docutils">
 <dt>Attributes:</dt>
-<dd>voltage_series:</dd>
+<dd>voltage_series: pandas series of the voltage list
+freq: frequency of voltage readings
+win_percent: window size as a fraction of of the sample frequency
+moving_average: moving average of voltages
+avg_voltage: average voltage of data series
+window: current window being analyzed
+peaks: time index of peaks detected
+peak_len: number of peaks detected</dd>
 <dt>Returns:</dt>
 <dd><dl class="first last docutils">
 <dt>peaks: list of indices from the time and voltage array which</dt>
@@ -119,7 +161,18 @@ author is cited using the format above.</p>
 <dl class="method">
 <dt id="processdata.ProcessData.get_results">
 <code class="descname">get_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_results" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Since beats are being measured peak-to-peak, the final peak
+detected notes the end of the final beat used to calculate
+mean heart rate and therefore is not recorded as a beat time</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>metrics: dictionary containing mean heart rate, minimum and maximum</dt>
+<dd>voltage, duration, number of beats, and times beats</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="processdata.ProcessData.get_time">
@@ -142,7 +195,14 @@ author is cited using the format above.</p>
 <dl class="method">
 <dt id="processdata.ProcessData.handle_neg">
 <code class="descname">handle_neg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.handle_neg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Checks if the current voltage list is all negative. If
+all negative, adds 1.5V to each voltage value and logs
+a warning</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>voltage: list containing voltages – updated if needed</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -184,7 +244,7 @@ author is cited using the format above.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, I_AM_AMAZING.
+      &copy;2018, Sharon Sangermano.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
