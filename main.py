@@ -38,7 +38,8 @@ def main():
     ecg_series.get_mean_hr()
     results = ecg_series.get_results()
     returndata.return_data(filename, results)
-    print('Completed.  Open %s to see results' % filename)
+    print('Completed.  Open %s to see results' %
+          filename.replace('.csv', '.json'))
 
 
 if __name__ == "__main__":
