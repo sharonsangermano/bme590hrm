@@ -1,7 +1,7 @@
 # bme590hrm
 Heart Rate Monitor Assignment 
 
-##Code
+## Code
 **main.py:** Asks user for test data file number (x for test_data/test_datax.csv), checks if 
     file exists and prompts user for a new file number if does not exist.  Calls functions to 
     read, process, and return data.
