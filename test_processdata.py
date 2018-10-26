@@ -2,6 +2,21 @@ from processdata import ProcessData
 import pytest
 
 
+def test_init():
+    test_obj = ProcessData('test_get.csv')
+    assert test_obj.file_name == 'test_get.csv'
+    assert test_obj.time == [0.04, 0.12, 0.3]
+    assert test_obj.voltage == [0.2, 0.3, 0.4]
+    assert test_obj.num_beats == 0
+    assert test_obj.peaks == []
+    assert test_obj.beats == []
+    assert test_obj.volts == []
+    assert test_obj.duration == 0
+    assert test_obj.mean_hr == 0
+    assert test_obj.min_vol == 0
+    assert test_obj.max_vol == 0
+
+
 @pytest.fixture
 def test_load():
     return ProcessData('test_data/test_data1.csv')
@@ -40,7 +55,7 @@ def test_get_peaks(test_load):
 def test_get_num_beats(test_load):
     test_load.get_peaks()
     num_beats = test_load.get_num_beats()
-    assert num_beats == 34
+    assert num_beats == 33
 
 
 def test_get_beats_time(test_load):
@@ -77,14 +92,14 @@ def test_get_mean_hr(test_load):
     test_load.get_duration()
     test_load.get_num_beats()
     mhr = round(test_load.get_mean_hr(), 3)
-    assert mhr == 76.239
+    assert mhr == 73.997
 
 
 def test_get_results(test_load):
     test_load.get_peaks()
     test_load.get_min()
     test_load.get_max()
-    test_load.get_beats_time()
+    beat_times = test_load.get_beats_time()
     test_load.get_duration()
     test_load.get_num_beats()
     test_load.get_mean_hr()
@@ -96,6 +111,28 @@ def test_get_results(test_load):
                    'Duration': '%f s' % test_load.get_duration(),
                    'Number of beats': '%f beats' % test_load.get_num_beats(),
                    'Beat occurrence times (in seconds)':
-                       test_load.get_beats_time(),
+                       beat_times[0:len(beat_times) - 1],
                    }
     assert dic_results == return_dic
+
+
+@pytest.mark.parametrize('file, is_neg', [
+    (ProcessData('test_neg_data.csv'), False),
+    (ProcessData('test_pos_data.csv'), True)
+])
+def test_check_neg(file, is_neg):
+    neg_check = file.check_neg()
+    assert neg_check == is_neg
+
+
+def test_handle_neg():
+    neg = ProcessData('test_neg_data.csv')
+    neg.check_neg()
+    vol = neg.handle_neg()
+    assert vol == [1.25, 0.6, 1.15, 1.2, 1.05, 0.9, 0.7, 0.6, 1.4]
+
+
+def test_inv():
+    test = ProcessData('test_invert.csv')
+    peaks = test.get_peaks()
+    assert peaks == [88, 441, 790]
