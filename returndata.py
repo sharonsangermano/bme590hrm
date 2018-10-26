@@ -17,7 +17,7 @@ def return_data(filename, metrics):
     """
     return_fname = filename.replace('.csv', '.json')
     return_file = open(return_fname, 'w')
-    json.dump(metrics, return_file)
+    json.dump(metrics, return_file, indent=2)
     return_file.close()
     logging.info('Processing complete for file: %s. JSON file has been created'
                  ' containing values of interest.' % filename)

@@ -288,11 +288,11 @@ class ProcessData:
                     voltage, duration, number of beats, and times beats
 
         """
-        metrics = {'Mean heart rate': '%f bpm' % round(self.mean_hr, 3),
-                   'Minimum voltage': '%f V' % self.min_vol,
-                   'Maximum voltage': '%f V' % self.max_vol,
-                   'Duration': '%f s' % self.duration,
-                   'Number of beats': '%f beats' % self.num_beats,
+        metrics = {'Mean heart rate': '%.3f bpm' % round(self.mean_hr, 3),
+                   'Minimum voltage': '%.3f V' % self.min_vol,
+                   'Maximum voltage': '%.3f V' % self.max_vol,
+                   'Duration': '%.3f s' % self.duration,
+                   'Number of beats': '%.0f beats' % self.num_beats,
                    'Beat occurrence times (in seconds)': self.beats[
                                                          0:len(self.beats)-1],
                    }

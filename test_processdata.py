@@ -104,12 +104,12 @@ def test_get_results(test_load):
     test_load.get_num_beats()
     test_load.get_mean_hr()
     return_dic = test_load.get_results()
-    dic_results = {'Mean heart rate': '%f bpm' %
+    dic_results = {'Mean heart rate': '%.3f bpm' %
                                       round(test_load.get_mean_hr(), 3),
-                   'Minimum voltage': '%f V' % test_load.get_min(),
-                   'Maximum voltage': '%f V' % test_load.get_max(),
-                   'Duration': '%f s' % test_load.get_duration(),
-                   'Number of beats': '%f beats' % test_load.get_num_beats(),
+                   'Minimum voltage': '%.3f V' % test_load.get_min(),
+                   'Maximum voltage': '%.3f V' % test_load.get_max(),
+                   'Duration': '%.3f s' % test_load.get_duration(),
+                   'Number of beats': '%.0f beats' % test_load.get_num_beats(),
                    'Beat occurrence times (in seconds)':
                        beat_times[0:len(beat_times) - 1],
                    }
