@@ -12818,3 +12818,102 @@
 10/26/2018 01:42:29 PM Warning: Non-float value found in dataset.  Skipping this time, voltage pair
 10/26/2018 01:42:29 PM Error: File could not be opened. Please try again
 10/26/2018 01:42:29 PM Processing complete for file: testing_return_data.csv. JSON file has been created containing values of interest.
+10/26/2018 02:31:53 PM Successfully opened file: test_neg_data.csv 
+10/26/2018 02:31:53 PM Successfully imported data from: test_neg_data.csv 
+10/26/2018 02:31:53 PM Successfully opened file: test_pos_data.csv 
+10/26/2018 02:31:53 PM Successfully imported data from: test_pos_data.csv 
+10/26/2018 02:31:54 PM Successfully opened file: test_get.csv 
+10/26/2018 02:31:54 PM Successfully imported data from: test_get.csv 
+10/26/2018 02:31:54 PM Error: File could not be opened. Please try again
+10/26/2018 02:31:54 PM Successfully opened file: test_data/test_data1.csv 
+10/26/2018 02:31:54 PM Successfully imported data from: test_data/test_data1.csv 
+10/26/2018 02:31:54 PM Successfully opened file: test_data/test_data1.csv 
+10/26/2018 02:31:54 PM Successfully imported data from: test_data/test_data1.csv 
+10/26/2018 02:31:54 PM Successfully opened file: test_data/test_data1.csv 
+10/26/2018 02:31:54 PM Successfully imported data from: test_data/test_data1.csv 
+10/26/2018 02:31:54 PM Successfully identified minimum voltage.
+10/26/2018 02:31:54 PM Successfully opened file: test_data/test_data1.csv 
+10/26/2018 02:31:54 PM Successfully imported data from: test_data/test_data1.csv 
+10/26/2018 02:31:54 PM Successfully identified maximum voltage.
+10/26/2018 02:31:54 PM Successfully opened file: test_data/test_data1.csv 
+10/26/2018 02:31:54 PM Successfully imported data from: test_data/test_data1.csv 
+10/26/2018 02:31:56 PM Successfully identified ECG voltage peaks.
+10/26/2018 02:31:56 PM Successfully opened file: test_data/test_data1.csv 
+10/26/2018 02:31:56 PM Successfully imported data from: test_data/test_data1.csv 
+10/26/2018 02:31:58 PM Successfully identified ECG voltage peaks.
+10/26/2018 02:31:58 PM Successfully identified number of heart beats.
+10/26/2018 02:31:58 PM Successfully opened file: test_data/test_data1.csv 
+10/26/2018 02:31:58 PM Successfully imported data from: test_data/test_data1.csv 
+10/26/2018 02:32:00 PM Successfully identified ECG voltage peaks.
+10/26/2018 02:32:00 PM Successfully identified times corresponding to beats.
+10/26/2018 02:32:00 PM Successfully opened file: test_data/test_data1.csv 
+10/26/2018 02:32:00 PM Successfully imported data from: test_data/test_data1.csv 
+10/26/2018 02:32:02 PM Successfully identified ECG voltage peaks.
+10/26/2018 02:32:02 PM Successfully identified voltages corresponding with beats.
+10/26/2018 02:32:02 PM Successfully opened file: test_data/test_data1.csv 
+10/26/2018 02:32:02 PM Successfully imported data from: test_data/test_data1.csv 
+10/26/2018 02:32:04 PM Successfully identified ECG voltage peaks.
+10/26/2018 02:32:04 PM Successfully identified times corresponding to beats.
+10/26/2018 02:32:04 PM Successfully identified duration.
+10/26/2018 02:32:04 PM Successfully opened file: test_data/test_data1.csv 
+10/26/2018 02:32:04 PM Successfully imported data from: test_data/test_data1.csv 
+10/26/2018 02:32:06 PM Successfully identified ECG voltage peaks.
+10/26/2018 02:32:06 PM Successfully identified times corresponding to beats.
+10/26/2018 02:32:06 PM Successfully identified duration.
+10/26/2018 02:32:06 PM Successfully identified number of heart beats.
+10/26/2018 02:32:06 PM Successfully identified mean heart rate.
+10/26/2018 02:32:06 PM Successfully opened file: test_data/test_data1.csv 
+10/26/2018 02:32:06 PM Successfully imported data from: test_data/test_data1.csv 
+10/26/2018 02:32:08 PM Successfully identified ECG voltage peaks.
+10/26/2018 02:32:08 PM Successfully identified minimum voltage.
+10/26/2018 02:32:08 PM Successfully identified maximum voltage.
+10/26/2018 02:32:08 PM Successfully identified times corresponding to beats.
+10/26/2018 02:32:08 PM Successfully identified duration.
+10/26/2018 02:32:08 PM Successfully identified number of heart beats.
+10/26/2018 02:32:08 PM Successfully identified mean heart rate.
+10/26/2018 02:32:08 PM Successfully identified mean heart rate.
+10/26/2018 02:32:08 PM Successfully identified minimum voltage.
+10/26/2018 02:32:08 PM Successfully identified maximum voltage.
+10/26/2018 02:32:08 PM Successfully identified duration.
+10/26/2018 02:32:08 PM Successfully identified number of heart beats.
+10/26/2018 02:32:08 PM Successfully opened file: test_neg_data.csv 
+10/26/2018 02:32:08 PM Successfully imported data from: test_neg_data.csv 
+10/26/2018 02:32:08 PM Warning: No positive voltages detected. all voltage values shifted up 1.5V. Minimum and maximum voltage values may not be accurate
+10/26/2018 02:32:08 PM Warning: No positive voltages detected. all voltage values shifted up 1.5V. Minimum and maximum voltage values may not be accurate
+10/26/2018 02:32:08 PM Warning: No positive voltages detected. all voltage values shifted up 1.5V. Minimum and maximum voltage values may not be accurate
+10/26/2018 02:32:08 PM Warning: No positive voltages detected. all voltage values shifted up 1.5V. Minimum and maximum voltage values may not be accurate
+10/26/2018 02:32:08 PM Warning: No positive voltages detected. all voltage values shifted up 1.5V. Minimum and maximum voltage values may not be accurate
+10/26/2018 02:32:08 PM Warning: No positive voltages detected. all voltage values shifted up 1.5V. Minimum and maximum voltage values may not be accurate
+10/26/2018 02:32:08 PM Warning: No positive voltages detected. all voltage values shifted up 1.5V. Minimum and maximum voltage values may not be accurate
+10/26/2018 02:32:08 PM Warning: No positive voltages detected. all voltage values shifted up 1.5V. Minimum and maximum voltage values may not be accurate
+10/26/2018 02:32:08 PM Warning: No positive voltages detected. all voltage values shifted up 1.5V. Minimum and maximum voltage values may not be accurate
+10/26/2018 02:32:08 PM Successfully opened file: test_invert.csv 
+10/26/2018 02:32:08 PM Successfully imported data from: test_invert.csv 
+10/26/2018 02:32:08 PM Warning: Inverted ECG signal detected peaks detected using inversion of input
+10/26/2018 02:32:08 PM Successfully identified ECG voltage peaks.
+10/26/2018 02:32:08 PM Successfully opened file: test_get.csv 
+10/26/2018 02:32:08 PM Successfully imported data from: test_get.csv 
+10/26/2018 02:32:08 PM Successfully identified number of heart beats.
+10/26/2018 02:32:08 PM Warning: Less than 5 beats detected. Mean heart rate may be inaccurate.
+10/26/2018 02:32:08 PM Successfully opened file: test_get.csv 
+10/26/2018 02:32:08 PM Successfully imported data from: test_get.csv 
+10/26/2018 02:32:08 PM Successfully identified duration.
+10/26/2018 02:32:08 PM Warning: Less than 5 seconds of ECG data being used. Mean heart rate may be inaccurate.
+10/26/2018 02:32:08 PM Successfully opened file: test_get.csv 
+10/26/2018 02:32:08 PM Successfully imported data from: test_get.csv 
+10/26/2018 02:32:08 PM Successfully identified mean heart rate.
+10/26/2018 02:32:08 PM Warning: Heart rate abnormally high. (>180 bmp)
+10/26/2018 02:32:08 PM Successfully opened file: test_get.csv 
+10/26/2018 02:32:08 PM Successfully imported data from: test_get.csv 
+10/26/2018 02:32:08 PM Successfully identified mean heart rate.
+10/26/2018 02:32:08 PM Warning: Heart rate abnormally low. (<40 bmp)
+10/26/2018 02:32:08 PM Warning: Non-float value found in dataset.  Skipping this time, voltage pair
+10/26/2018 02:32:09 PM Successfully opened file: test_get.csv 
+10/26/2018 02:32:09 PM Successfully opened file: test_get_str.csv 
+10/26/2018 02:32:09 PM Warning: Non-float value found in dataset.  Skipping this time, voltage pair
+10/26/2018 02:32:09 PM Warning: Non-float value found in dataset.  Skipping this time, voltage pair
+10/26/2018 02:32:09 PM Successfully opened file: test_get_null.csv 
+10/26/2018 02:32:09 PM Warning: Null value found in dataset.  Skipping this time, voltage pair
+10/26/2018 02:32:09 PM Warning: Non-float value found in dataset.  Skipping this time, voltage pair
+10/26/2018 02:32:09 PM Error: File could not be opened. Please try again
+10/26/2018 02:32:09 PM Processing complete for file: testing_return_data.csv. JSON file has been created containing values of interest.
