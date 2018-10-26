@@ -1,0 +1,202 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>processdata module &#8212; AWESOME_SAUCE v1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-processdata">
+<span id="processdata-module"></span><h1>processdata module<a class="headerlink" href="#module-processdata" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="processdata.ProcessData">
+<em class="property">class </em><code class="descclassname">processdata.</code><code class="descname">ProcessData</code><span class="sig-paren">(</span><em>file_arg</em><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="processdata.ProcessData.check_data">
+<code class="descname">check_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.check_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="processdata.ProcessData.check_neg">
+<code class="descname">check_neg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.check_neg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="processdata.ProcessData.get_beats_time">
+<code class="descname">get_beats_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_beats_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="processdata.ProcessData.get_duration">
+<code class="descname">get_duration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_duration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="processdata.ProcessData.get_max">
+<code class="descname">get_max</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_max" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Returns:</dt>
+<dd>max_vol: the maximum voltage from the data set</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="processdata.ProcessData.get_mean_hr">
+<code class="descname">get_mean_hr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_mean_hr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="processdata.ProcessData.get_min">
+<code class="descname">get_min</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_min" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Returns:</dt>
+<dd>min_vol: the minimum voltage from the data set</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="processdata.ProcessData.get_num_beats">
+<code class="descname">get_num_beats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_num_beats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="processdata.ProcessData.get_peak_voltage">
+<code class="descname">get_peak_voltage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_peak_voltage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="processdata.ProcessData.get_peaks">
+<code class="descname">get_peaks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_peaks" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Attributes:</dt>
+<dd>voltage_series:</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>peaks: list of indices from the time and voltage array which</dt>
+<dd>indicate a peak in the voltage reading</dd>
+</dl>
+</dd>
+<dt>References:</dt>
+<dd><dl class="first docutils">
+<dt>Modified from:</dt>
+<dd>van Gent, P. (2016). Analyzing a Discrete Heart Rate Signal
+Using Python. A tech blog about fun things with Python and
+embedded electronics. Retrieved from:
+<a class="reference external" href="http://www.paulvangent.com/2016/03/15/analyzing-a-discrete">http://www.paulvangent.com/2016/03/15/analyzing-a-discrete</a>-
+heart-rate-signal-using-python-part-1/</dd>
+</dl>
+<p class="last">Author states that code may be modified and redistributed as long
+as the modified code is shared with the same right and the original
+author is cited using the format above.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="processdata.ProcessData.get_results">
+<code class="descname">get_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="processdata.ProcessData.get_time">
+<code class="descname">get_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_time" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Returns:</dt>
+<dd>time: list of all time values obtained from the data file</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="processdata.ProcessData.get_voltage">
+<code class="descname">get_voltage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.get_voltage" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Returns:</dt>
+<dd>voltage: list of all voltage values obtained from the data file</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="processdata.ProcessData.handle_neg">
+<code class="descname">handle_neg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#processdata.ProcessData.handle_neg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/processdata.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, I_AM_AMAZING.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/processdata.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

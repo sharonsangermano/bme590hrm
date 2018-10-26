@@ -3,7 +3,6 @@ import numpy as np
 import math
 import logging
 import readdata
-import sys
 
 
 class ProcessData:
@@ -28,14 +27,21 @@ class ProcessData:
             self.duration: duration found for time/voltage data
                         used to calculate mean heart rate
             self.mean_hr: mean heart rate calculated for the data set
+
+        Returns:
+
+        Raises:
+            IOError: If file_name is not the correct file name
+
         """
         logging.basicConfig(filename="hrm_log.txt", format='%(asctime)s '
                                                            '%(message)s',
                             datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
-        with open('hrm_log.txt', 'w'):
-            pass
         self.file_name = file_arg
-        self.time, self.voltage = readdata.get_data(self.file_name)
+        try:
+            self.time, self.voltage = readdata.get_data(self.file_name)
+        except IOError as inst:
+            raise inst
         logging.info('Successfully imported data from: %s ' % self.file_name)
         self.num_beats = 0
         self.peaks = []
@@ -46,52 +52,39 @@ class ProcessData:
         self.min_vol = 0
         self.max_vol = 0
 
-    def check_data(self):
-        try:
-            np.isreal(self.time)
-        except ValueError:
-            logging.error('ValueError detected in time list')
-            print('None real number found in time list. Please try again')
-            sys.exit()
-        try:
-            np.isreal(self.voltage)
-        except ValueError:
-            logging.error('ValueError detected in voltage list')
-            print('None real number found in voltage list. Please try again')
-            sys.exit()
-        if len(self.time) != len(self.voltage):
-            logging.error('Error: Time and voltage arrays must be of '
-                          'equal length')
-            print('Error: Time and voltage arrays must be of equal length')
-            sys.exit()
-
-    # def check_neg(self):
-    #     total = 0
-    #     count = 0
-    #     for x in self.voltage:
-    #         if x > 0:
-    #             count += 1
-    #         total += 1
-    #         if count/total < 0.02:
-    #             return False
-    #         else:
-    #             return True
-    #
     def check_neg(self):
+        """
+        Checks voltage list to determine if all values are negative
+
+        Returns:
+            boolean: True if the list contains one or more positive
+                    voltage values.  False if the list contains only
+                    negative voltage values
+
+        """
         for x in self.voltage:
             if x > 0:
                 return True
         return False
 
     def handle_neg(self):
+        """
+        Checks if the current voltage list is all negative. If
+        all negative, adds 1.5V to each voltage value and logs
+        a warning
+
+        Returns:
+            voltage: list containing voltages -- updated if needed
+
+        """
         if self.check_neg() is False:
             for y in range(0, len(self.voltage)):
                 self.voltage[y] = self.voltage[y] + 1.5
                 logging.warning('Warning: No positive voltages detected. '
-                                'all voltage values shifted up 0.5V. Minimum, '
-                                'Maximum, and peak voltage values are not '
+                                'all voltage values shifted up 1.5V. Minimum '
+                                'and maximum voltage values may not be '
                                 'accurate')
-            return self.voltage
+        return self.voltage
 
     def get_time(self):
         """
@@ -133,66 +126,21 @@ class ProcessData:
         logging.info('Successfully identified maximum voltage.')
         return self.max_vol
 
-    # def get_peaks(self):
-    #     """
-    #
-    #     Attributes:
-    #         voltage_series:
-    #
-    #     Returns:
-    #         peaks: list of indices from the time and voltage array which
-    #                 indicate a peak in the voltage reading
-    #
-    #     References:
-    #         Modified from:
-    #             van Gent, P. (2016). Analyzing a Discrete Heart Rate Signal
-    #             Using Python. A tech blog about fun things with Python and
-    #             embedded electronics. Retrieved from:
-    #             http://www.paulvangent.com/2016/03/15/analyzing-a-discrete-
-    #             heart-rate-signal-using-python-part-1/
-    #
-    #         Author states that code may be modified and redistributed as long
-    #         as the modified code is shared with the same right and the
-    #         original author is cited using the format above.
-    #     """
-    #     voltage_series = pd.Series(data=self.voltage)
-    #     freq = 1/(self.time[1] - self.time[0])
-    #     win_percent = 0.5
-    #     moving_average = voltage_series.rolling(int(win_percent*freq)).mean()
-    #     avg_voltage = (np.mean(voltage_series))
-    #     moving_average = [avg_voltage if math.isnan(x) else x for x in
-    #                       moving_average]
-    #     moving_average = [(x+abs(avg_voltage-abs(min(self.voltage)/2)))*1.2
-    #                       for x in moving_average]
-    #     window = []
-    #     peaks = []
-    #     location = 0
-    #     for datapoint in voltage_series:
-    #         rolling_mean = moving_average[location]
-    #         if datapoint < rolling_mean and len(window) < 1:
-    #             location += 1
-    #         elif datapoint > rolling_mean:
-    #             window.append(datapoint)
-    #             location += 1
-    #             if datapoint >= len(voltage_series):
-    #                 beat_location = location - len(window) + \
-    #                                 (window.index(max(window)))
-    #                 peaks.append(beat_location)
-    #                 window = []
-    #         else:
-    #             beat_location = location - len(window) + \
-    #                             (window.index(max(window)))
-    #             peaks.append(beat_location)
-    #             window = []
-    #             location += 1
-    #     self.peaks = peaks
-    #     logging.info('Successfully identified ECG voltage peaks.')
-    #     return self.peaks
     def get_peaks(self):
         """
+        Using moving average algorithm to detect voltage peaks and
+        captures the time[] and voltage[] indices corresponding to
+        each peak.
 
         Attributes:
-            voltage_series:
+            voltage_series: pandas series of the voltage list
+            freq: frequency of voltage readings
+            win_percent: window size as a fraction of of the sample frequency
+            moving_average: moving average of voltages
+            avg_voltage: average voltage of data series
+            window: current window being analyzed
+            peaks: time index of peaks detected
+            peak_len: number of peaks detected
 
         Returns:
             peaks: list of indices from the time and voltage array which
@@ -253,7 +201,16 @@ class ProcessData:
         return self.peaks
 
     def get_num_beats(self):
-        self.num_beats = len(self.peaks)
+        """
+        Beats are considered to be one peak to the next so the
+        total number of beats is one fewer than the total number of
+        peaks detected.
+
+        Returns:
+            num_beats: number of heart beats detected
+
+        """
+        self.num_beats = len(self.peaks) - 1
         logging.info('Successfully identified number of heart beats.')
         if self.num_beats < 5:
             logging.warning('Warning: Less than 5 beats detected. Mean '
@@ -261,6 +218,12 @@ class ProcessData:
         return self.num_beats
 
     def get_beats_time(self):
+        """
+
+        Returns:
+            beats: list of times corresponding to peaks detected
+
+        """
         for i in self.peaks:
             if i <= len(self.time):
                 self.beats.append(self.time[i])
@@ -268,14 +231,28 @@ class ProcessData:
         return self.beats
 
     def get_peak_voltage(self):
+        """
+
+        Returns:
+            volts: list of voltages corresponding to peaks detected
+
+        """
         for i in self.peaks:
-            if i <= len(self.voltage):
+            if i < len(self.voltage):
                 self.volts.append(self.voltage[i])
         logging.info('Successfully identified voltages corresponding with '
                      'beats.')
         return self.volts
 
     def get_duration(self):
+        """
+        Duration is considered the time from the first detected peak
+        to the last detected peak.
+
+        Returns:
+            duration: the time in which the detected beats occurred
+
+        """
         self.duration = max(self.beats) - min(self.beats)
         logging.info('Successfully identified duration.')
         if self.duration < 5:
@@ -284,6 +261,14 @@ class ProcessData:
         return self.duration
 
     def get_mean_hr(self):
+        """
+        Mean heart rate is calculated as the number of beats detected
+        divided by the duration.
+
+        Returns:
+            mean_hr: the calculated mean heart rate
+
+        """
         self.mean_hr = self.num_beats/self.duration*60
         logging.info('Successfully identified mean heart rate.')
         if self.mean_hr < 40:
@@ -293,11 +278,22 @@ class ProcessData:
         return self.mean_hr
 
     def get_results(self):
-        results = {'Mean heart rate': '%f bpm' % round(self.mean_hr, 3),
+        """
+        Since beats are being measured peak-to-peak, the final peak
+        detected notes the end of the final beat used to calculate
+        mean heart rate and therefore is not recorded as a beat time
+
+        Returns:
+            metrics: dictionary containing mean heart rate, minimum and maximum
+                    voltage, duration, number of beats, and times beats
+
+        """
+        metrics = {'Mean heart rate': '%f bpm' % round(self.mean_hr, 3),
                    'Minimum voltage': '%f V' % self.min_vol,
                    'Maximum voltage': '%f V' % self.max_vol,
                    'Duration': '%f s' % self.duration,
                    'Number of beats': '%f beats' % self.num_beats,
-                   'Beat occurrence times (in seconds)': self.beats,
+                   'Beat occurrence times (in seconds)': self.beats[
+                                                         0:len(self.beats)-1],
                    }
-        return results
+        return metrics
