@@ -1,5 +1,6 @@
 from processdata import ProcessData
 import pytest
+import logging
 
 
 def test_init():
@@ -15,6 +16,12 @@ def test_init():
     assert test_obj.mean_hr == 0
     assert test_obj.min_vol == 0
     assert test_obj.max_vol == 0
+    assert 'Successfully imported data from:' in open('hrm_log.txt').read()
+
+
+def test_init_fail():
+    with pytest.raises(IOError):
+        ProcessData('fake_file.csv')
 
 
 @pytest.fixture
@@ -130,9 +137,48 @@ def test_handle_neg():
     neg.check_neg()
     vol = neg.handle_neg()
     assert vol == [1.25, 0.6, 1.15, 1.2, 1.05, 0.9, 0.7, 0.6, 1.4]
+    assert 'Warning: No positive voltages detected. all voltage ' \
+           'values shifted up 1.5V. Minimum and maximum voltage values ' \
+           'may not be accurate' in open('hrm_log.txt').read()
 
 
 def test_inv():
     test = ProcessData('test_invert.csv')
     peaks = test.get_peaks()
     assert peaks == [88, 441, 790]
+    assert 'Warning: Inverted ECG signal detected peaks detected using ' \
+           'inversion of input' in open('hrm_log.txt').read()
+
+
+def test_num_beats_log():
+    test = ProcessData('test_get.csv')
+    test.peaks = [1, 2, 3]
+    test.get_num_beats()
+    assert 'Warning: Less than 5 beats detected. Mean ' \
+           'heart rate may be inaccurate.' in open('hrm_log.txt').read()
+
+
+def test_duration_log():
+    test = ProcessData('test_get.csv')
+    test.beats = [0.03, 4.5]
+    test.get_duration()
+    assert 'Warning: Less than 5 seconds of ECG data being used. Mean ' \
+           'heart rate may be inaccurate.' in open('hrm_log.txt').read()
+
+
+def test_high_mhr_log():
+    test = ProcessData('test_get.csv')
+    test.num_beats = 200
+    test.duration = 60
+    test.get_mean_hr()
+    assert 'Warning: Heart rate abnormally high. (>180 bmp)' in \
+           open('hrm_log.txt').read()
+
+
+def test_low_mhr_log():
+    test = ProcessData('test_get.csv')
+    test.num_beats = 30
+    test.duration = 60
+    test.get_mean_hr()
+    assert 'Warning: Heart rate abnormally low. (<40 bmp)' in \
+           open('hrm_log.txt').read()

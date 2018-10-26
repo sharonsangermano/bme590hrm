@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>readdata module &#8212; AWESOME_SAUCE v1.0.0 documentation</title>
+    <title>readdata module &#8212; bme590hrm v1.0.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="_static/documentation_options.js"></script>
@@ -34,27 +34,34 @@
 <dl class="function">
 <dt id="readdata.can_float">
 <code class="descclassname">readdata.</code><code class="descname">can_float</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#readdata.can_float" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function takes in a string a determines whether or not it
+<dd><p>Takes in a string a determines whether or not it
 can be converted to a float.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>value: the string to check if can be converted to float</dd>
 <dt>Returns:</dt>
 <dd>bool: True if can convert to float, False otherwise</dd>
+<dt>Raises:</dt>
+<dd>ValueError: if value cannot be converted to float</dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="readdata.get_data">
 <code class="descclassname">readdata.</code><code class="descname">get_data</code><span class="sig-paren">(</span><em>filename_arg</em><span class="sig-paren">)</span><a class="headerlink" href="#readdata.get_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function opens the data file of interest and pulls time and voltage
-values from the data file to be used for calculating the heart rate.</p>
+<dd><p>Open the data file of interest and pulls time and voltage values
+from the data file to be used for calculating the heart rate.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>filename_arg: name of test data file to be tested</dd>
 <dt>Returns:</dt>
-<dd>time: list containing the time values of the data set
-voltage: list containing the voltage values of the data set</dd>
+<dd><p class="first">time: list containing the time values of the data set (all floats)
+voltage: list containing the voltage values of the data</p>
+<blockquote class="last">
+<div>set (all floats)</div></blockquote>
+</dd>
+<dt>Raises:</dt>
+<dd>IOError: if file associated with filename_arg cannot be opened</dd>
 </dl>
 </dd></dl>
 
@@ -96,7 +103,7 @@ voltage: list containing the voltage values of the data set</dd>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, I_AM_AMAZING.
+      &copy;2018, Sharon Sangermano.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
