@@ -1,1 +1,10 @@
-{"Mean heart rate": 4.225, "Minimum voltage": -3.34, "Maximum voltage": 3.81, "Duration": 28.400000000000002, "Number of beats": 2, "Beat occurrence times": [1.392, 29.792]}
+{
+  "Mean heart rate": "2.113 bpm",
+  "Minimum voltage": "-3.340 V",
+  "Maximum voltage": "3.810 V",
+  "Duration": "28.400 s",
+  "Number of beats": "1 beats",
+  "Beat occurrence times (in seconds)": [
+    1.392
+  ]
+}
